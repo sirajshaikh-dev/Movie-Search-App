@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;1,300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212;
+    color: #fff;
+}
+
+header {
+    background-color: #333;
+    color: aliceblue;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.main {
+    width: 100%;
+    min-height: 100vh;
+    background-color: black;
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+input[type="search"], #searchBtn {
+    margin: 10px;
+}
+
+#search {
+    width: 70%;
+    max-width: 500px;
+    padding: 15px 30px;
+    background-color: rgba(52, 73, 94, 0.7);
+    outline: none;
+    border: none;
+    box-shadow: 0px 0px 1px white;
+    color: white;
+    font-size: 20px;
+    border-radius: 25px;
+    transition: 1s;
+}
+
+#search:focus {
+    background-color: white;
+    color: black;
+}
+
+#searchBtn {
+    padding: 15px 30px;
+    background-color: #65c747;
+    border: none;
+    color: white;
+    font-size: 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#searchBtn:hover {
+    background-color: #a72525;
+}
+
+.box {
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    margin: 10px;
+    height: 450px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+
+.box img {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 5px rgb(0 0 0 / 20%);
+    border-radius: 5px;
+}
+
+.box:hover {
+    transform: scale(1.05);
+}
+
+.box .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    opacity: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: opacity 0.5s;
+    border-radius: 5px;
+}
+
+.box:hover .overlay {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.overlay h2 {
+    margin-bottom: 10px;
+}
+
+.overlay p {
+    font-size: 14px;
+}
+
+.loading {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    margin: 20px auto;
+    display: none; /* Initially hidden */
+}
+
+@media (max-width: 768px) {
+    .box {
+        width: 45%;
+    }
+
+    #search {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .box {
+        width: 100%;
+    }
+
+    #search {
+        font-size: 18px;
+    }
+}
+.suggestions {
+    position: absolute;
+    width: 500px;
+    max-height: 200px;
+    background-color: rgb(146, 137, 137);
+    /* border: 1px solid #ccc; */
+    border-radius: 0 0 5px 5px;
+    overflow-y: auto;
+    z-index: 1000;
+    top: 55px;
+}
+
+/* Individual suggestion item */
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #3b3737;
+}
+
+/* Hover effect for suggestion item */
+.suggestion-item:hover {
+    background-color: #9a6464;
+}
+
+/* Remove the border from the last suggestion item */
+.suggestion-item:last-child {
+    border-bottom: none;
+}
