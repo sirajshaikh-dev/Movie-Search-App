@@ -6,7 +6,7 @@ const SEARCHAPI =
 
 const movieBox = document.querySelector("#movie-box");
 const searchInput = document.querySelector("#search");
-const searchButton = document.querySelector("#search-button");
+const searchButton = document.querySelector("#searchBtn");
 const suggestionBox = document.createElement("div");
 
 suggestionBox.classList.add("suggestions");
