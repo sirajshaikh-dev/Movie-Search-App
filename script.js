@@ -1,21 +1,26 @@
-const APIURL =
-  "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+const APIURL = "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=";
 const IMGPATH = "https://image.tmdb.org/t/p/w1280";
-const SEARCHAPI =
-  "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
+const SEARCHAPI = "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=";
 
 const movieBox = document.querySelector("#movie-box");
 const searchInput = document.querySelector("#search");
-const searchButton = document.querySelector("#searchBtn");
+const searchButton = document.querySelector("#search-button");
 const suggestionBox = document.createElement("div");
 
 suggestionBox.classList.add("suggestions");
 searchInput.parentNode.appendChild(suggestionBox);
 
 const getMovies = async (api) => {
-  const response = await fetch(api);
-  const data = await response.json();
-  showMovies(data.results);
+  try {
+    const response = await fetch(api);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data: ${response.status}`);
+    }
+    const data = await response.json();
+    showMovies(data.results);
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+  }
 };
 
 const showMovies = (data) => {
@@ -37,53 +42,90 @@ const showMovies = (data) => {
   });
 };
 
-const fetchSuggestions = async (query) => {
-  const response = await fetch(SEARCHAPI + query);
-  const data = await response.json();
-  showSuggestions(data.results);
-};
+const pageButtons = document.getElementById('page-buttons');
+const prevPageBtn = document.getElementById('prev-page');
+const nextPageBtn = document.getElementById('next-page');
 
-const showSuggestions = (data) => {
-  suggestionBox.innerHTML = "";
-  data.slice(0, 5).forEach((item) => {
-    const suggestionItem = document.createElement("div");
-    suggestionItem.classList.add("suggestion-item");
-    suggestionItem.textContent = item.original_title;
-    suggestionItem.addEventListener("click", () => {
-      searchInput.value = item.original_title;
-      fetchMovies();
-      suggestionBox.innerHTML = "";
-    });
-    suggestionBox.appendChild(suggestionItem);
-  });
-};
+let currentPage = 1;
+function createPagination(pages) {
+    pageButtons.innerHTML = ''; 
+    for (let i = 1; i <= pages; i++) {
+        const button = document.createElement('button');
+        button.innerText = i;
+        button.addEventListener('click', () => fetchMoviesByPage(i));
+        pageButtons.appendChild(button);
+    }
+}
 
-const fetchMovies = () => {
-  if (searchInput.value !== "") {
-    getMovies(SEARCHAPI + searchInput.value);
-  } else {
-    getMovies(APIURL);
-  }
-};
-
-searchInput.addEventListener("keyup", (event) => {
-  if (event.target.value !== "") {
-    fetchSuggestions(event.target.value);
-  } else {
-    suggestionBox.innerHTML = "";
-  }
+async function fetchMoviesByPage(page) {
+    currentPage = page;
+    const apiURL = APIURL + page;
+    getMovies(apiURL);
+}
+// Only scroll left-righ
+prevPageBtn.addEventListener('click', () => {
+    pageButtons.scrollBy({ left: -200, behavior: 'smooth' });
 });
 
-searchInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    fetchMovies();
-    suggestionBox.innerHTML = "";
-  }
+nextPageBtn.addEventListener('click', () => {
+    pageButtons.scrollBy({ left: 200, behavior: 'smooth' });
 });
+
+// fetch when click on prev & next btn
+// prevPageBtn.addEventListener('click', () => {
+//     if (currentPage > 1) {
+//         currentPage--;
+//         fetchMoviesByPage(currentPage);
+//     }
+// });
+
+// nextPageBtn.addEventListener('click', () => {
+//     currentPage++;
+//     fetchMoviesByPage(currentPage);
+// });
+
+// Initial fetch
+createPagination(20); 
+fetchMoviesByPage(1);
 
 searchButton.addEventListener("click", () => {
-  fetchMovies();
-  suggestionBox.innerHTML = "";
+  const searchValue = searchInput.value;
+  if (searchValue) {
+    getMovies(SEARCHAPI + searchValue);
+  } else {
+    fetchMoviesByPage(1);
+  }
 });
 
-getMovies(APIURL);
+//
+
+const fetchSuggestions = async (query) => {
+    const response = await fetch(SEARCHAPI + query);
+    const data = await response.json();
+    showSuggestions(data.results);
+  };
+  
+  const showSuggestions = (data) => {
+    clearSuggestions()
+        data.slice(0,10).forEach((item) => {
+        const suggestionItem = document.createElement("div");
+        suggestionItem.classList.add("suggestion-item");
+        suggestionItem.textContent = item.original_title;
+        suggestionItem.addEventListener("click", () => {
+        searchInput.value = item.original_title;
+        fetchMoviesByPage(1);
+        clearSuggestions();
+      });
+      suggestionBox.appendChild(suggestionItem);
+    });
+  };
+  const clearSuggestions =()=>{
+    suggestionBox.innerHTML=""
+  }
+  searchInput.addEventListener("keyup", (event) => {
+    if (event.target.value !== "") {
+      fetchSuggestions(event.target.value);
+    } else {
+    clearSuggestions()
+  }
+  });
