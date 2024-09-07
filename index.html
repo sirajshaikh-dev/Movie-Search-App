@@ -12,17 +12,24 @@
         <header>
             <h1>Movie Search App</h1>
         </header>
-        <div class="row" style="justify-content:center;">
+        <div class="search-container" style="justify-content:center;">
             <input type="search" id="search" autofocus autocomplete="off" placeholder="Search here..." aria-label="Search for movies"/>
-            <button id="searchBtn">Search</button>
+            <button id="search-button">Search</button>
         </div>
-        <div class="row" id="movie-box">
-            <!-- Loading indicator -->
-            <div id="loading" class="loading">Loading...</div>
+        <div class="movie-container" id="movie-box">
+             <div id="loading" class="loading">Loading...</div>
         </div>
+        
+        <footer>
+            <div id="pagination" class="pagination">
+                <button id="prev-page" class="slide-button">&#10094;</button> <!-- Left arrow -->
+                <div id="page-buttons" class="page-buttons">
+                    <!-- Pagination buttons will be dynamically added here -->
+                </div>
+                <button id="next-page" class="slide-button">&#10095;</button> <!-- Right arrow -->
+            </div>
+        </footer>
     </div>
     <script src="script.js"></script>
 </body>
-
-
 </html>
