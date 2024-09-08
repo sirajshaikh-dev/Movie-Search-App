@@ -29,6 +29,13 @@ You can access the live version of the app [here](https://movie-search-app-three
 3. Browse through the search results or movie suggestions as you type.
 4. Use the pagination buttons to navigate through different pages of movies.
 
+## Screenshots
+
+![Image 1](images/Screenshot%202024-09-08%20211631.png)
+![Image 2](images/Screenshot%202024-09-08%20211645.png)
+![Image 3](images/Screenshot%202024-09-08%20211658.png)
+![Image 4](images/Screenshot%202024-09-08%20211739.png)
+
 ## Installation
 
 To run this project locally:
