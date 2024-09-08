@@ -61,8 +61,10 @@ async function fetchMoviesByPage(page) {
     currentPage = page;
     const apiURL = APIURL + page;
     getMovies(apiURL);
+    clearSuggestions() 
+    searchInput.value=""
 }
-// Only scroll left-righ
+// Only scroll left-right
 prevPageBtn.addEventListener('click', () => {
     pageButtons.scrollBy({ left: -200, behavior: 'smooth' });
 });
@@ -95,9 +97,8 @@ searchButton.addEventListener("click", () => {
   } else {
     fetchMoviesByPage(1);
   }
+    clearSuggestions()  
 });
-
-//
 
 const fetchSuggestions = async (query) => {
     const response = await fetch(SEARCHAPI + query);
@@ -113,15 +114,12 @@ const fetchSuggestions = async (query) => {
         suggestionItem.textContent = item.original_title;
         suggestionItem.addEventListener("click", () => {
         searchInput.value = item.original_title;
-        fetchMoviesByPage(1);
+        // getMovies(SEARCHAPI + item.original_title);  // Fetch movies immediately on item click
         clearSuggestions();
       });
       suggestionBox.appendChild(suggestionItem);
     });
   };
-  const clearSuggestions =()=>{
-    suggestionBox.innerHTML=""
-  }
   searchInput.addEventListener("keyup", (event) => {
     if (event.target.value !== "") {
       fetchSuggestions(event.target.value);
@@ -129,3 +127,6 @@ const fetchSuggestions = async (query) => {
     clearSuggestions()
   }
   });
+  const clearSuggestions =()=>{
+    suggestionBox.innerHTML=""
+  }
