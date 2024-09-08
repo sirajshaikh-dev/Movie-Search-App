@@ -85,7 +85,7 @@ nextPageBtn.addEventListener('click', () => {
 // });
 
 // Initial fetch
-createPagination(20); 
+createPagination(50); 
 fetchMoviesByPage(1);
 
 searchButton.addEventListener("click", () => {
