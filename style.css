@@ -196,6 +196,8 @@ display: none;
     margin-bottom: 0px;
     overflow: hidden;
     padding: 0px ;
+    width: 50%;
+    margin: 0 auto;
 }
 .page-buttons::-webkit-scrollbar {
     display: none;
