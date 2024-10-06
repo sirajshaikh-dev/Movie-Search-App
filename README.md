@@ -42,10 +42,10 @@ To run this project locally:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/movie-search-app.git
+   git clone https://github.com/sirajshaikh-dev/Movie-Search-App.git
 2. Navigate to the project directory:
    ```bash
-    cd movie-search-app
+    cd Movie-Search-App
 3. Open index.html in your browser.
 
 ## API Usage
